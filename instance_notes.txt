@@ -1,0 +1,17 @@
+Create a role with the following policies attached:
+AmazonS3FullAccess
+AmazonSSMManagedInstanceCore
+AmazonSSMPatchAssociation
+
+Create a P instance with a TESLA NVIDIA AMI
+
+In Modify IAM menu, add the above role to the instance.
+
+Install nvidia-docker:
+sudo yum-config-manager --disable amzn2-graphics
+curl -s -L https://nvidia.github.io/libnvidia-container/stable/rpm/nvidia-container-toolkit.repo | \
+  sudo tee /etc/yum.repos.d/nvidia-container-toolkit.repo
+sudo yum install -y nvidia-container-toolkit
+sudo nvidia-ctk runtime configure --runtime=docker
+sudo systemctl restart docker
+sudo usermod -aG docker ssm-user
